@@ -16,6 +16,7 @@ interface OpenWindow {
   title: string;
   content: string;
   zIndex: number;
+  position: { x: number; y: number };
 }
 
 const desktopApps: App[] = [
@@ -36,6 +37,7 @@ function App() {
       content:
         "Welcome to the Files application! Your documents are organized here.",
       zIndex: 2,
+      position: { x: 100, y: 100 },
     },
     {
       id: "window-2",
@@ -43,6 +45,7 @@ function App() {
       title: "Notes",
       content: "Start writing your notes here. This is a simple text editor.",
       zIndex: 1,
+      position: { x: 140, y: 140 },
     },
   ]);
   const [nextZIndex, setNextZIndex] = useState(3);
@@ -68,6 +71,7 @@ function App() {
       title: app.label,
       content: `This is the ${app.label} application. Double-click icons to open more windows!`,
       zIndex: nextZIndex,
+      position: { x: 100 + windows.length * 40, y: 100 + windows.length * 40 },
     };
     setWindows([...windows, newWindow]);
     setNextZIndex((z) => z + 1);
@@ -84,8 +88,27 @@ function App() {
     setNextZIndex((z) => z + 1);
   };
 
+  const handleWindowDragEnd = (
+    windowId: string,
+    delta: { x: number; y: number }
+  ) => {
+    setWindows((wins) =>
+      wins.map((w) =>
+        w.id === windowId
+          ? {
+              ...w,
+              position: {
+                x: w.position.x + delta.x,
+                y: w.position.y + delta.y,
+              },
+            }
+          : w
+      )
+    );
+  };
+
   return (
-    <Desktop>
+    <Desktop windows={windows} onWindowDragEnd={handleWindowDragEnd}>
       <div className="desktop-icons">
         {desktopApps.map((app) => (
           <DesktopIcon
@@ -98,15 +121,12 @@ function App() {
         ))}
       </div>
 
-      {windows.map((window, index) => (
+      {windows.map((window) => (
         <Window
           key={window.id}
           id={window.id}
           title={window.title}
-          initialPosition={{
-            x: 100 + index * 40,
-            y: 100 + index * 40,
-          }}
+          position={window.position}
           initialSize={{ width: 500, height: 350 }}
           zIndex={window.zIndex}
           onClose={() => handleCloseWindow(window.id)}

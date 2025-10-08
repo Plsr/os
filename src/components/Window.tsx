@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { ReactNode, CSSProperties } from "react";
 import { useDraggable } from "@dnd-kit/core";
 
@@ -6,7 +5,7 @@ export interface WindowProps {
   id: string;
   title: string;
   children: ReactNode;
-  initialPosition?: { x: number; y: number };
+  position: { x: number; y: number };
   initialSize?: { width: number; height: number };
   onClose?: () => void;
   zIndex?: number;
@@ -17,14 +16,12 @@ export function Window({
   id,
   title,
   children,
-  initialPosition = { x: 100, y: 100 },
+  position,
   initialSize = { width: 400, height: 300 },
   onClose,
   zIndex = 1,
   onFocus,
 }: WindowProps) {
-  const [position, setPosition] = useState(initialPosition);
-
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
       id,
@@ -41,22 +38,12 @@ export function Window({
       : undefined,
   };
 
-  const handleDragEnd = () => {
-    if (transform) {
-      setPosition({
-        x: position.x + transform.x,
-        y: position.y + transform.y,
-      });
-    }
-  };
-
   return (
     <div
       ref={setNodeRef}
       style={style}
       className={`window ${isDragging ? "dragging" : ""}`}
       onClick={onFocus}
-      onMouseUp={handleDragEnd}
     >
       <div className="window-titlebar" {...listeners} {...attributes}>
         <div className="window-title">{title}</div>
