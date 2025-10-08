@@ -1,7 +1,7 @@
 .desktop {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #C9BDA2;
   position: relative;
   overflow: hidden;
 }
@@ -26,13 +26,12 @@
   gap: 8px;
   cursor: pointer;
   user-select: none;
-  color: white;
+  color: #2C1810;
   text-align: center;
-  transition: transform 0.2s;
 }
 
-.desktop-icon:hover {
-  transform: scale(1.05);
+.desktop-icon:hover .icon-image {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .desktop-icon.dragging {
@@ -42,18 +41,18 @@
 .icon-image {
   width: 50px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid #2C1810;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  backdrop-filter: blur(10px);
 }
 
 .icon-label {
-  font-size: 12px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  font-size: 11px;
+  font-weight: bold;
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -62,9 +61,10 @@
 
 .window {
   position: absolute;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  background: #F5E6D3;
+  border: 3px solid #2C1810;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 rgba(44, 24, 16, 0.3);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -77,14 +77,30 @@
   z-index: 1000 !important;
 }
 
+.window:nth-child(1) .window-titlebar {
+  background: #4A90E2;
+}
+
+.window:nth-child(2) .window-titlebar {
+  background: #E8A76F;
+}
+
+.window:nth-child(3) .window-titlebar {
+  background: #E78B9C;
+}
+
+.window:nth-child(4) .window-titlebar {
+  background: #7BC8A4;
+}
+
 .window-titlebar {
-  height: 40px;
-  background: linear-gradient(180deg, #f5f5f5 0%, #e5e5e5 100%);
-  border-bottom: 1px solid #d0d0d0;
+  height: 32px;
+  background: #4A90E2;
+  border-bottom: 3px solid #2C1810;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 10px;
   cursor: grab;
   user-select: none;
 }
@@ -94,44 +110,103 @@
 }
 
 .window-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: #333;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .window-controls {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .window-control-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #2C1810;
+  border-radius: 2px;
+  background: #F5E6D3;
   cursor: pointer;
-  transition: filter 0.2s;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2C1810;
 }
 
 .window-control-btn:hover {
-  filter: brightness(0.9);
+  background: #E8D9C3;
 }
 
-.window-control-btn.close {
-  background: #ff5f57;
+.window-control-btn:active {
+  background: #D8C9B3;
 }
 
-.window-control-btn.minimize {
-  background: #ffbd2e;
+.window-control-btn.close::after {
+  content: '×';
+  font-size: 16px;
+  line-height: 1;
 }
 
-.window-control-btn.maximize {
-  background: #28ca42;
+.window-control-btn.minimize::after {
+  content: '−';
+  font-size: 14px;
+  line-height: 1;
+}
+
+.window-control-btn.maximize::after {
+  content: '□';
+  font-size: 11px;
+  line-height: 1;
 }
 
 .window-content {
   flex: 1;
-  padding: 20px;
+  padding: 16px;
   overflow: auto;
-  background: white;
+  background: #F5E6D3;
+  color: #2C1810;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.taskbar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #E8D9C3;
+  border: 3px solid #2C1810;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 rgba(44, 24, 16, 0.3);
+  padding: 8px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 100;
+}
+
+.taskbar-icon {
+  width: 40px;
+  height: 40px;
+  background: #F5E6D3;
+  border: 2px solid #2C1810;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.taskbar-icon:hover {
+  background: #E8D9C3;
+}
+
+.taskbar-icon:active {
+  background: #D8C9B3;
 }

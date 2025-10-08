@@ -61,7 +61,18 @@ export function Desktop({ children, windows, onWindowDragEnd }: DesktopProps) {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="desktop">{children}</div>
+      <div className="desktop">
+        {children}
+        <div className="taskbar">
+          <div className="taskbar-icon">📁</div>
+          <div className="taskbar-icon">📅</div>
+          <div className="taskbar-icon">💬</div>
+          <div className="taskbar-icon">🎵</div>
+          <div className="taskbar-icon">🌐</div>
+          <div className="taskbar-icon">📁</div>
+          <div className="taskbar-icon">🗑️</div>
+        </div>
+      </div>
       <DragOverlay dropAnimation={null}>
         {activeId && activeWindow ? (
           <div
