@@ -289,7 +289,6 @@ describe("EventBus", () => {
   describe("complex scenarios", () => {
     it("should handle unsubscribing during event emission", () => {
       const handler1 = vi.fn();
-      let unsubscribe2: (() => void) | undefined;
       const handler2 = vi.fn(() => {
         // Unsubscribe self during execution
         unsubscribe2?.();
@@ -297,7 +296,7 @@ describe("EventBus", () => {
       const handler3 = vi.fn();
 
       eventBus.on("test-event", handler1);
-      unsubscribe2 = eventBus.on("test-event", handler2);
+      const unsubscribe2 = eventBus.on("test-event", handler2);
       eventBus.on("test-event", handler3);
 
       eventBus.emit("test-event", "data");
